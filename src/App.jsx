@@ -1,67 +1,76 @@
-import axios from 'axios';
-import React, { useRef, useState } from 'react';
-import './index.css'
+import React, { useState, useRef } from 'react'
+import Swal from 'sweetalert2'
+import axios from 'axios'
+
 
 const App = () => {
-    const [addweather, setaddweather] = useState([]);
-    let inputRef = useRef();
 
-    const checkStatus = (event) => {
-        event.preventDefault();
-        if (inputRef.current.value === '') {
-            alert('Please Enter City Name');
-            return;
-        }
+  const [addWeatherData, setaddWeatherData] = useState([])
+  const inputVal = useRef()
 
-        axios(`https://api.weatherapi.com/v1/current.json?key=45a8fb89afff423d8c2210032240509&q=${inputRef.current.value}&aqi=no`)
-            .then(response => {
-                setaddweather(prevState => [response.data, ...prevState]);
-            })
-            .catch(error => {
-                console.log(error);
-                alert('Invalid City Name!!');
-            });
-
-        inputRef.current.value = '';
+  const formSubmit = (e) => {
+    e.preventDefault();
+    if (inputVal.current.value === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please, Enter any City Name...",
+      });
     }
+    else {
+      axios(`https://api.weatherapi.com/v1/current.json?key=c3afac881b484bfcb0e82723240809&q=${inputVal.current.value}&aqi=no`)
+        .then(res => {
+          setaddWeatherData(prevState => [res.data, ...prevState]);
+          console.log("Done!");
+        })
+        .catch(err => {
+          console.log(err);
+          console.log("Oops!");
+          alert('Invalid City Name!!');
+        });
 
-    return (
-        <>
-            <div className="min-h-screen bg-gradient-to-b from-blue-500 to-indigo-600 flex flex-col items-center py-10">
-                <h1 className="text-5xl font-bold text-white mb-8 drop-shadow-lg">Weather App</h1>
+      inputVal.current.value = "";
+    }
+  }
 
-                <form onSubmit={checkStatus} className="flex flex-col items-center w-full max-w-lg space-y-4">
-                    <input
-                        type="text"
-                        placeholder='Enter City Name...'
-                        ref={inputRef}
-                        className="w-full px-4 py-3 text-lg border-2 border-white rounded-lg bg-white bg-opacity-20 placeholder-white text-white focus:outline-none focus:ring-4 focus:ring-indigo-400 transition duration-300"
-                    />
-                    <button
-                        type="submit"
-                        className="w-full py-3 bg-purple-600 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-purple-700 transition-transform transform hover:scale-105 duration-300 ease-in-out"
-                    >
-                        Check Weather
-                    </button>
-                </form>
+  return (
+    <>
+      <div className='min-h-screen bg-gradient-to-br from-[#57bfe9] to-[#2DFFF5] flex flex-col items-center py-10'>
+        <div>
+          <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold text-[#00438B] mb-6 sm:mb-8 drop-shadow-lg text-center'>Weather App</h1>
+          <form onSubmit={formSubmit} className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-center justify-center w-full max-w-xs sm:max-w-lg mt-[50px] sm:mt-[80px]">
+            <input type="text" placeholder="Enter City Name..." ref={inputVal} className="w-full sm:w-[300px] md:w-[400px] lg:w-[600px] px-4 py-2 sm:py-3 text-base sm:text-lg drop-shadow-2xl rounded-lg bg-white bg-opacity-40 placeholder-[#00438B] text-[#00438B] border-2 border-[#428ddd] focus:outline-none focus:border-2 focus:border-[#00438B] font-bold" />
+            <button className="w-full sm:w-[200px] md:w-[300px] py-2 sm:py-3 bg-[#00438B] text-white text-base sm:text-lg font-semibold rounded-lg shadow-lg hover:bg-[#00438B] transition-transform transform hover:scale-105 duration-300 ease-in-out">Check Weather</button>
+          </form>
+        </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-                    {addweather.map((item, index) => (
-                        <div key={index} className="w-full max-w-sm bg-white bg-opacity-90 backdrop-blur-md rounded-xl shadow-2xl p-6 transform hover:scale-105 transition-transform duration-300 ease-in-out">
-                            <h2 className="text-3xl font-semibold text-gray-800">{item.location.name}, {item.location.country}</h2>
-                            <p className="text-lg text-gray-600 mt-2">Temperature: <span className="text-blue-600">{item.current.temp_c}°C</span></p>
-                            <p className="text-lg text-gray-600">Condition: {item.current.condition.text}</p>
-                            <img src={item.current.condition.icon} alt="Weather condition" className="w-20 h-20 my-4" />
-                            <div className="flex justify-between w-full">
-                                <p className="text-sm text-gray-500">Humidity: {item.current.humidity}%</p>
-                                <p className="text-sm text-gray-500">Wind: {item.current.wind_kph} kph</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8 mt-8 sm:mt-10">
+          {addWeatherData.map((item, index) => (
+            <div key={index} className="w-full max-w-xs sm:max-w-sm bg-white bg-opacity-50 rounded-xl shadow-2xl p-4 sm:p-6 transform hover:scale-105 transition-transform duration-300 ease-in-out">
+              <img src={item.current.condition.icon} className="w-[70px] h-[70px] sm:w-[90px] sm:h-[90px] my-4 mx-auto flex justify-center" alt='Current Weather Image' />
+
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-800 text-center">{item.location.name} <span className='text-lg sm:text-xl font-normal text-gray-800'>{item.location.country}</span></h2>
+
+              <div className="text-sm sm:text-lg text-gray-600 mt-6 sm:mt-8 font-semibold">
+                Temperature: <span className="text-[#00438B] font-semibold">{item.current.temp_c}°C</span>
+              </div>
+              <div className="text-sm sm:text-lg text-gray-600 font-semibold">
+                Condition: <span className="text-[#00438B] font-semibold">{item.current.condition.text}</span>
+              </div>
+              <div className="text-sm sm:text-lg text-gray-600 font-semibold">
+                Wind: <span className="text-[#00438B] font-semibold">{item.current.wind_kph} Kph</span>
+              </div>
+              <div className="text-sm sm:text-lg text-gray-600 font-semibold">
+                Humidity: <span className="text-[#00438B] font-semibold">{item.current.humidity}%</span>
+              </div>
             </div>
-        </>
-    );
-};
+          ))}
+        </div>
+      </div>
 
-export default App;
+    </>
+  )
+}
+
+
+export default App 
