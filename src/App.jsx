@@ -13,7 +13,7 @@ const App = () => {
             return;
         }
 
-        axios(`https://api.weatherapi.com/v1/current.json?key=45a8fb89afff423d8c2210032240509&q=${inputRef.current.value}&aqi=no`)
+        axios(`https://api.weatherapi.com/v1/current.json?key=c3afac881b484bfcb0e82723240809&q=${inputRef.current.value}&aqi=no`)
             .then(response => {
                 setaddweather(prevState => [response.data, ...prevState]);
             })
