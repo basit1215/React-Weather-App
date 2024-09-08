@@ -8,7 +8,6 @@ const App = () => {
   const [addWeatherData, setaddWeatherData] = useState([])
   const inputVal = useRef()
 
-<<<<<<< HEAD
   const formSubmit = (e) => {
     e.preventDefault();
     if (inputVal.current.value === "") {
@@ -17,7 +16,6 @@ const App = () => {
         title: "Oops...",
         text: "Please, Enter any City Name...",
       });
-=======
         axios(`https://api.weatherapi.com/v1/current.json?key=c3afac881b484bfcb0e82723240809&q=${inputRef.current.value}&aqi=no`)
             .then(response => {
                 setaddweather(prevState => [response.data, ...prevState]);
@@ -28,7 +26,6 @@ const App = () => {
             });
 
         inputRef.current.value = '';
->>>>>>> baecc9800a6563782cbeaf4306ff7c5a4ed274c5
     }
     else {
       axios(`https://api.weatherapi.com/v1/current.json?key=c3afac881b484bfcb0e82723240809&q=${inputVal.current.value}&aqi=no`)
@@ -79,15 +76,15 @@ const App = () => {
             </div>
           ))}
         </div>
+
+
       </div>
 
-<<<<<<< HEAD
+
     </>
+
+
   )
 }
 
-
-export default App 
-=======
-export default App;
->>>>>>> baecc9800a6563782cbeaf4306ff7c5a4ed274c5
+ export default App
