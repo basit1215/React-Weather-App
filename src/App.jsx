@@ -14,18 +14,8 @@ const App = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Please, Enter any City Name...",
+        text: "Please, Enter any City Name!",
       });
-        axios(`https://api.weatherapi.com/v1/current.json?key=c3afac881b484bfcb0e82723240809&q=${inputRef.current.value}&aqi=no`)
-            .then(response => {
-                setaddweather(prevState => [response.data, ...prevState]);
-            })
-            .catch(error => {
-                console.log(error);
-                alert('Invalid City Name!!');
-            });
-
-        inputRef.current.value = '';
     }
     else {
       axios(`https://api.weatherapi.com/v1/current.json?key=c3afac881b484bfcb0e82723240809&q=${inputVal.current.value}&aqi=no`)
@@ -36,7 +26,21 @@ const App = () => {
         .catch(err => {
           console.log(err);
           console.log("Oops!");
-          alert('Invalid City Name!!');
+
+          Swal.fire({
+            title: "The City name is Incorrect!!!\nTry again and Enter the Correct City name...",
+            showClass: {
+              popup: ` animate__animated
+                       animate__fadeInUp
+                       animate__faster  `
+            },
+            hideClass: {
+              popup: `
+                      animate__animated
+                      animate__fadeOutDown
+                      animate__faster  `
+            }
+          });
         });
 
       inputVal.current.value = "";
@@ -87,4 +91,4 @@ const App = () => {
   )
 }
 
- export default App
+export default App
