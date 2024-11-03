@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 
-
 const App = () => {
 
   const [addWeatherData, setaddWeatherData] = useState([])
@@ -51,7 +50,7 @@ const App = () => {
     <>
       <div className='min-h-screen bg-gradient-to-br from-[#57bfe9] to-[#2DFFF5] flex flex-col items-center py-10'>
         <div>
-          <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold text-[#00438B] mb-6 sm:mb-8 drop-shadow-lg text-center'>Weather App</h1>
+          <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold text-[#00438B] mb-6 sm:mb-8 drop-shadow-lg text-center'>Weather App 🌦</h1>
           <form onSubmit={formSubmit} className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-center justify-center w-full max-w-xs sm:max-w-lg mt-[50px] sm:mt-[80px]">
             <input type="text" placeholder="Enter City Name..." ref={inputVal} className="w-full sm:w-[300px] md:w-[400px] lg:w-[600px] px-4 py-2 sm:py-3 text-base sm:text-lg drop-shadow-2xl rounded-lg bg-white bg-opacity-40 placeholder-[#00438B] text-[#00438B] border-2 border-[#428ddd] focus:outline-none focus:border-2 focus:border-[#00438B] font-bold" />
             <button className="w-full sm:w-[200px] md:w-[300px] py-2 sm:py-3 bg-[#00438B] text-white text-base sm:text-lg font-semibold rounded-lg shadow-lg hover:bg-[#00438B] transition-transform transform hover:scale-105 duration-300 ease-in-out">Check Weather</button>
@@ -81,13 +80,8 @@ const App = () => {
           ))}
         </div>
 
-
       </div>
-
-
     </>
-
-
   )
 }
 
